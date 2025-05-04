@@ -30,10 +30,23 @@ public class Calendar{
     public String getData(){
         return day+"-"+month.getMonthName()+"-"+this.year+"\n";
     }
+    private void handleNewYear(){
+        month = months[0];
+        year=year+1;
+        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
+            months[1].setMaxDayNum(29);
+        } else{
+            months[1].setMaxDayNum(28);
+        }
+    }
     public void moveByAWeek(){
         if(Integer.parseInt(day)+7 > month.getMaxDayNum()){
+            if(month.getNumOfMonth()+1 > 12){
+                handleNewYear();
+            } else {
+                month = months[month.getNumOfMonth()];
+            }
             day=String.valueOf(Integer.parseInt(day)+7 - month.getMaxDayNum());
-            month = months[month.getNumOfMonth()];
             return;
         }
         day=String.valueOf(Integer.parseInt(day)+7);
