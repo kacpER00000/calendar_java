@@ -16,4 +16,7 @@ public class Month {
     public String getMonthName(){
         return monthName;
     }
+    public int getNumOfMonth(){
+        return Integer.parseInt(numOfMonth);
+    }
 }
