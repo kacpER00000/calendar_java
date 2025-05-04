@@ -13,6 +13,9 @@ public class Main {
         try{
             data=new Calendar(day,numOfMonth,year);
             System.out.println(data.getData());
+            System.out.println("Data moved by a 1 week");
+            data.moveByAWeek();
+            System.out.println(data.getData());
         } catch (DayOutOfRangeException e) {
             System.out.println(e.getMessage());
         } catch (IndexOutOfBoundsException e) {
