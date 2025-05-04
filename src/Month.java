@@ -10,4 +10,7 @@ public class Month {
     public int getMaxDayNum(){
         return maxDayNum;
     }
+    public void setMaxDayNum(int num){
+        maxDayNum=num;
+    }
 }
