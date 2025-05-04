@@ -13,4 +13,7 @@ public class Month {
     public void setMaxDayNum(int num){
         maxDayNum=num;
     }
+    public String getMonthName(){
+        return monthName;
+    }
 }
