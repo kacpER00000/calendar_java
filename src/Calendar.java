@@ -30,4 +30,12 @@ public class Calendar{
     public String getData(){
         return day+"-"+month.getMonthName()+"-"+this.year+"\n";
     }
+    public void moveByAWeek(){
+        if(Integer.parseInt(day)+7 > month.getMaxDayNum()){
+            day=String.valueOf(Integer.parseInt(day)+7 - month.getMaxDayNum());
+            month = months[month.getNumOfMonth()];
+            return;
+        }
+        day=String.valueOf(Integer.parseInt(day)+7);
+    }
 }
