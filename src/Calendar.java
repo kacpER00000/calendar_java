@@ -30,25 +30,41 @@ public class Calendar{
     public String getData(){
         return day+"-"+month.getMonthName()+"-"+this.year+"\n";
     }
-    private void handleNewYear(){
-        month = months[0];
-        year=year+1;
+    private void handleNewYear(boolean moveBackward){
+        if(moveBackward){
+            month = months[11];
+            year=year-1;
+        } else {
+            month = months[0];
+            year=year+1;
+        }
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
             months[1].setMaxDayNum(29);
         } else{
             months[1].setMaxDayNum(28);
         }
     }
-    public void moveByAWeek(){
-        if(Integer.parseInt(day)+7 > month.getMaxDayNum()){
-            if(month.getNumOfMonth()+1 > 12){
-                handleNewYear();
-            } else {
+    public void moveByAWeek(boolean moveBackward){
+        int interval= moveBackward ? -7:7;
+        if(Integer.parseInt(day)+interval > month.getMaxDayNum()) {
+            if (month.getNumOfMonth() + 1 > 12) {
+                handleNewYear(false);
+            }
+            else {
                 month = months[month.getNumOfMonth()];
             }
-            day=String.valueOf(Integer.parseInt(day)+7 - month.getMaxDayNum());
+            day=String.valueOf(Integer.parseInt(day)+interval - months[month.getNumOfMonth()-2].getMaxDayNum());
             return;
         }
-        day=String.valueOf(Integer.parseInt(day)+7);
+        if(Integer.parseInt(day)+interval < 1){
+            if (month.getNumOfMonth() - 1 < 1){
+                handleNewYear(true);
+            } else{
+                month = months[month.getNumOfMonth()-2];
+            }
+            day=String.valueOf(month.getMaxDayNum()+Integer.parseInt(day)+interval);
+            return;
+        }
+        day=String.valueOf(Integer.parseInt(day)+interval);
     }
 }
