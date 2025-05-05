@@ -5,9 +5,9 @@ public class Calendar{
     public Calendar(String day, String numOfMonth,int year) throws IndexOutOfBoundsException,DayOutOfRangeException{
         this.year=year;
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
-            Month.months[1].setMaxDayNum(29);
+            Months.months[1].setMaxDayNum(29);
         }
-        month=Month.months[Integer.parseInt(numOfMonth)-1];
+        month=Months.months[Integer.parseInt(numOfMonth)-1];
         if(Integer.parseInt(day)<1 || Integer.parseInt(day)>month.getMaxDayNum()){
             throw new DayOutOfRangeException("Day out of range. Your input: " + day);
         }
@@ -18,16 +18,16 @@ public class Calendar{
     }
     private void handleNewYear(boolean moveBackward){
         if(moveBackward){
-            month = Month.months[11];
+            month = Months.months[11];
             year=year-1;
         } else {
-            month = Month.months[0];
+            month = Months.months[0];
             year=year+1;
         }
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
-            Month.months[1].setMaxDayNum(29);
+            Months.months[1].setMaxDayNum(29);
         } else{
-            Month.months[1].setMaxDayNum(28);
+            Months.months[1].setMaxDayNum(28);
         }
     }
     public void moveByAWeek(boolean moveBackward){
@@ -37,16 +37,16 @@ public class Calendar{
                 handleNewYear(false);
             }
             else {
-                month = Month.months[month.getNumOfMonth()];
+                month = Months.months[month.getNumOfMonth()];
             }
-            day=String.valueOf(Integer.parseInt(day)+interval - Month.months[month.getNumOfMonth()-2].getMaxDayNum());
+            day=String.valueOf(Integer.parseInt(day)+interval - Months.months[month.getNumOfMonth()-2].getMaxDayNum());
             return;
         }
         if(Integer.parseInt(day)+interval < 1){
             if (month.getNumOfMonth() - 1 < 1){
                 handleNewYear(true);
             } else{
-                month = Month.months[month.getNumOfMonth()-2];
+                month = Months.months[month.getNumOfMonth()-2];
             }
             day=String.valueOf(month.getMaxDayNum()+Integer.parseInt(day)+interval);
             return;
