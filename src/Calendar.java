@@ -16,13 +16,13 @@ public class Calendar{
     public String getData(){
         return day+"-"+month.getMonthName()+"-"+this.year+"\n";
     }
-    private void handleNewYear(boolean moveBackward){
+    private void handleYearChange(boolean moveBackward){
         if(moveBackward){
             month = Months.months[11];
-            year=year-1;
+            year--;
         } else {
             month = Months.months[0];
-            year=year+1;
+            year++;
         }
         if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
             Months.months[1].setMaxDayNum(29);
@@ -30,27 +30,24 @@ public class Calendar{
             Months.months[1].setMaxDayNum(28);
         }
     }
-    public void moveByAWeek(boolean moveBackward){
-        int interval= moveBackward ? -7:7;
-        if(Integer.parseInt(day)+interval > month.getMaxDayNum()) {
-            if (month.getNumOfMonth() + 1 > 12) {
-                handleNewYear(false);
-            }
-            else {
+    public void moveByAWeek(boolean moveBackward) {
+        int interval = moveBackward ? -7 : 7;
+        int newDay = Integer.parseInt(day) + interval;
+        if (newDay > month.getMaxDayNum()) {
+            if (month.getNumOfMonth() == 12) {
+                handleYearChange(false);
+            } else {
                 month = Months.months[month.getNumOfMonth()];
             }
-            day=String.valueOf(Integer.parseInt(day)+interval - Months.months[month.getNumOfMonth()-2].getMaxDayNum());
-            return;
-        }
-        if(Integer.parseInt(day)+interval < 1){
-            if (month.getNumOfMonth() - 1 < 1){
-                handleNewYear(true);
-            } else{
-                month = Months.months[month.getNumOfMonth()-2];
+            newDay = newDay - month.getMaxDayNum();
+        } else if (newDay < 1) {
+            if (month.getNumOfMonth() == 1) {
+                handleYearChange(true);
+            } else {
+                month = Months.months[month.getNumOfMonth() - 2];
             }
-            day=String.valueOf(month.getMaxDayNum()+Integer.parseInt(day)+interval);
-            return;
+            newDay = month.getMaxDayNum() + newDay;
         }
-        day=String.valueOf(Integer.parseInt(day)+interval);
+        day = String.valueOf(newDay);
     }
 }
