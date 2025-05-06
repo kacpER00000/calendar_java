@@ -1,4 +1,4 @@
-public class DayOutOfRangeException extends Exception {
+public class DayOutOfRangeException extends RuntimeException {
     public DayOutOfRangeException(String message) {
         super(message);
     }
