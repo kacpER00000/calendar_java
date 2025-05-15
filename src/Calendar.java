@@ -84,7 +84,6 @@ public class Calendar{
         int diff = dayCountMyDay - dayCountRef;
         return WeekNames.weekNames[(-1 + diff % 7 + 7) % 7];
     }
-
     public String getDayWeekZeller(){
         int d = Integer.parseInt(day);
         int m = month.getNumOfMonth();
