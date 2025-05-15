@@ -20,7 +20,6 @@ public class Main {
                 data=new Calendar(day,numOfMonth,year);
             }
             System.out.println(data.getData());
-            System.out.println(data.getDayWeek());
             System.out.println("Data moved by a 1 week");
             data.moveByAWeek(true);
             System.out.println(data.getData());

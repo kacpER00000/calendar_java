@@ -35,7 +35,7 @@ public class Calendar{
         }
     }
     public String getData(){
-        return day+" "+month.getMonthName()+" "+this.year+"\n";
+        return this.getDayWeekDateReference()+", "+day+" "+month.getMonthName()+" "+this.year+"\n";
     }
     private void handleYearChange(boolean moveBackward){
         if(moveBackward){
@@ -71,7 +71,21 @@ public class Calendar{
         }
         day = String.valueOf(newDay);
     }
-    public int getDayWeek(){
+    public String getDayWeekDateReference() {
+        int dayCountRef = 365*2020 + 2020/4 - 2020/100 + 2020/400 + (153*10+8)/5 + 30;
+        int d = Integer.parseInt(day);
+        int m = month.getNumOfMonth();
+        int y = year;
+        if (m<3) {
+            m += 12;
+            y -= 1;
+        }
+        int dayCountMyDay = 365*y + y/4 - y/100 + y/400 + (153*m+8)/5 + d;
+        int diff = dayCountMyDay - dayCountRef;
+        return WeekNames.weekNames[(-1 + diff % 7 + 7) % 7];
+    }
+
+    public String getDayWeekZeller(){
         int d = Integer.parseInt(day);
         int m = month.getNumOfMonth();
         int y = year;
@@ -80,5 +94,6 @@ public class Calendar{
             y -= 1;
         }
         int h = (d + (13*(m + 1))/5 + y%100 + (y%100)/4 + (y/100)/4 + 5*(y/100)) % 7;
+        return WeekNames.weekNames[h];
     }
 }
