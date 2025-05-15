@@ -4,31 +4,35 @@ public class Calendar{
     private int year;
     public Calendar(String day, int numOfMonth,int year) throws IndexOutOfBoundsException,DayOutOfRangeException{
         this.year=year;
-        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
-            Months.months[1].setMaxDayNum(29);
+        month=Months.getMonth(numOfMonth-1);
+        if (month.getNumOfMonth()==2 && (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
+            month.setMaxDayNum(29);
         }
-        month=Months.months[numOfMonth-1];
         if(Integer.parseInt(day)<1 || Integer.parseInt(day)>month.getMaxDayNum()){
             throw new DayOutOfRangeException("Day out of range. Your input: " + day);
         }
         this.day=day;
     }
+
+    //Drugi konstruktor wymaga poprawy
     public Calendar(String day, int numOfMonth,int year,boolean mode){
         if(mode){
             this.year=year;
-            if(Integer.parseInt(day) > Months.months[numOfMonth-1].getMaxDayNum()){
+            if(Integer.parseInt(day) > Months.getMonth(numOfMonth-1).getMaxDayNum()){
                 if(numOfMonth==12){
-                    handleYearChange(false);
+                    month = Months.getMonth(0);
+                    this.year++;
                 } else {
-                    this.month=Months.months[numOfMonth];
+                    this.month=Months.getMonth(numOfMonth);
                 }
-                this.day=String.valueOf(Integer.parseInt(day)-Months.months[numOfMonth-1].getMaxDayNum());
+                this.day=String.valueOf(Integer.parseInt(day)-Months.getMonth(numOfMonth-1).getMaxDayNum());
             }
             if(Integer.parseInt(day)<1){
                 if(numOfMonth==1){
-                    handleYearChange(true);
+                    month = Months.getMonth(11);
+                    this.year--;
                 } else {
-                    this.month=Months.months[numOfMonth-2];
+                    this.month=Months.getMonth(numOfMonth-2);
                 }
                 this.day=String.valueOf(month.getMaxDayNum()+Integer.parseInt(day));
             }
@@ -37,40 +41,35 @@ public class Calendar{
     public String getData(){
         return this.getDayWeekDateReference()+", "+day+" "+month.getMonthName()+" "+this.year+"\n";
     }
-    private void handleYearChange(boolean moveBackward){
-        if(moveBackward){
-            month=Months.months[11];
-            year--;
-        } else {
-            month = Months.months[0];
-            year++;
-        }
-        if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
-            Months.months[1].setMaxDayNum(29);
-        } else{
-            Months.months[1].setMaxDayNum(28);
-        }
-    }
     public void moveByAWeek(boolean moveBackward) {
         int interval = moveBackward ? -7 : 7;
         int newDay = Integer.parseInt(day) + interval;
         if (newDay > month.getMaxDayNum()) {
             if (month.getNumOfMonth() == 12) {
-                handleYearChange(false);
+                month = Months.getMonth(0);
+                year++;
             } else {
-                month = Months.months[month.getNumOfMonth()];
+                month = Months.getMonth(month.getNumOfMonth());
             }
-            newDay = newDay - Months.months[month.getNumOfMonth()-2].getMaxDayNum();
+            if (month.getNumOfMonth() == 2 && (year % 4 == 0 && year % 100 != 0 || (year % 400 == 0))) {
+                month.setMaxDayNum(29);
+            }
+            newDay = newDay - month.getMaxDayNum();
         } else if (newDay < 1) {
             if (month.getNumOfMonth() == 1) {
-                handleYearChange(true);
+                month = Months.getMonth(11);
+                year--;
             } else {
-                month = Months.months[month.getNumOfMonth() - 2];
+                month = Months.getMonth(month.getNumOfMonth() - 2);
+            }
+            if (month.getNumOfMonth() == 2 && (year % 4 == 0 && year % 100 != 0 || (year % 400 == 0))) {
+                month.setMaxDayNum(29);
             }
             newDay = month.getMaxDayNum() + newDay;
         }
         day = String.valueOf(newDay);
     }
+
     public String getDayWeekDateReference() {
         int dayCountRef = 365*2020 + 2020/4 - 2020/100 + 2020/400 + (153*10+8)/5 + 30;
         int d = Integer.parseInt(day);

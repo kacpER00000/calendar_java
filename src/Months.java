@@ -1,5 +1,5 @@
 public class Months {
-    public static Month[] months = new Month[]{
+    private static Month[] months = new Month[]{
             new Month("01","Styczen",31),
             new Month("02","Luty",28),
             new Month("03","Marzec",31),
@@ -13,4 +13,11 @@ public class Months {
             new Month("11","Listopad",30),
             new Month("12","Grudzien",31),
     };
+    public static Month getMonth(int numOfMonth){
+        try{
+            return months[numOfMonth];
+        } catch (IndexOutOfBoundsException e){
+            throw new MonthOutOfRangeException("Month out of range. Your input: " + numOfMonth);
+        }
+    }
 }

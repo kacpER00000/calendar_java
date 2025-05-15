@@ -20,13 +20,18 @@ public class Main {
                 data=new Calendar(day,numOfMonth,year);
             }
             System.out.println(data.getData());
-            System.out.println("Data moved by a 1 week");
-            data.moveByAWeek(true);
-            System.out.println(data.getData());
-        } catch (DayOutOfRangeException e) {
+            int option;
+            do{
+                System.out.println("Wycisnij 1 aby przesunac o tydzien, 0 aby zakonczyc");
+                sc=new Scanner(System.in);
+                option=sc.nextInt();
+                System.out.println(data.getData());
+                System.out.println("Data moved by a 1 week");
+                data.moveByAWeek(true);
+                System.out.println(data.getData());
+            }while(option!=0);
+        } catch (MonthOutOfRangeException | DayOutOfRangeException e) {
             System.out.println(e.getMessage());
-        } catch (IndexOutOfBoundsException e) {
-            throw new MonthOutOfRangeException("Month out of range. Your input "+ numOfMonth);
         }
     }
 }
