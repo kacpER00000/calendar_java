@@ -7,7 +7,7 @@ public class Main {
         sc=new Scanner(System.in);
         String day=sc.nextLine();
         sc=new Scanner(System.in);
-        String numOfMonth=sc.nextLine();
+        int numOfMonth=sc.nextInt();
         sc=new Scanner(System.in);
         int year=sc.nextInt();
         System.out.println("Select calendar mode(0,1)");
