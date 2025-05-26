@@ -1,9 +1,9 @@
-public class Calendar implements Comparable<Calendar>{
+public class Date implements Comparable<Date>{
     private String day;
     private Month month;
     private int year;
     private DateOutputMode outputMode;
-    public Calendar(String day, int numOfMonth,int year, DateOutputMode outputMode) throws IndexOutOfBoundsException,DayOutOfRangeException{
+    public Date(String day, int numOfMonth, int year, DateOutputMode outputMode) throws IndexOutOfBoundsException,DayOutOfRangeException{
         this.outputMode=outputMode;
         this.year=year;
         month=Months.getMonth(numOfMonth-1);
@@ -17,7 +17,7 @@ public class Calendar implements Comparable<Calendar>{
     }
 
     //Drugi konstruktor wymaga poprawy
-    public Calendar(String day, int numOfMonth,int year,boolean mode){
+    public Date(String day, int numOfMonth, int year, boolean mode){
         if(mode){
             this.year=year;
             if(Integer.parseInt(day) > Months.getMonth(numOfMonth-1).getMaxDayNum()){
@@ -125,7 +125,7 @@ public class Calendar implements Comparable<Calendar>{
         this.outputMode=outputMode;
     }
     @Override
-    public int compareTo(Calendar c){
+    public int compareTo(Date c){
         if(year == c.year){
             if(month == c.month){
                 return day.compareTo(c.day);
