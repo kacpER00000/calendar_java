@@ -2,7 +2,9 @@ public class Calendar{
     private String day;
     private Month month;
     private int year;
-    public Calendar(String day, int numOfMonth,int year) throws IndexOutOfBoundsException,DayOutOfRangeException{
+    private DateOutputMode outputMode;
+    public Calendar(String day, int numOfMonth,int year, DateOutputMode outputMode) throws IndexOutOfBoundsException,DayOutOfRangeException{
+        this.outputMode=outputMode;
         this.year=year;
         month=Months.getMonth(numOfMonth-1);
         if (month.getNumOfMonth()==2 && (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
@@ -39,7 +41,32 @@ public class Calendar{
         }
     }
     public String getData(){
-        return this.getDayWeekDateReference()+", "+day+" "+month.getMonthName()+" "+this.year+"\n";
+        String output="";
+        String day=this.day;
+        String month=this.month.getMonthName();
+        String year = String.valueOf(this.year);
+        switch(outputMode){
+            case FULL_DATE:
+                output += getDayWeekZeller().getWeekDayName() + ", ";
+                day += " ";
+                month += " ";
+                break;
+            case DATE_WITHOUT_WEEKDAY:
+                day += " ";
+                month += " ";
+                break;
+            case DATE_WITH_ROMAN_NUM:
+                day += ".";
+                month=this.month.getRomanMonth() + ".";
+                break;
+            case SHORT_DATE:
+                output += getDayWeekZeller().getShortWeekDayName() + ",.";
+                day += "-";
+                month=this.month.getShortMonthName()+"-";
+                break;
+        }
+        output += day + month + year;
+        return output;
     }
     public void moveByAWeek(boolean moveBackward) {
         int interval = moveBackward ? -7 : 7;
@@ -70,7 +97,7 @@ public class Calendar{
         day = String.valueOf(newDay);
     }
 
-    public String getDayWeekDateReference() {
+    public WeekName getDayWeekDateReference() {
         int dayCountRef = 365*2020 + 2020/4 - 2020/100 + 2020/400 + (153*10+8)/5 + 30;
         int d = Integer.parseInt(day);
         int m = month.getNumOfMonth();
@@ -83,7 +110,7 @@ public class Calendar{
         int diff = dayCountMyDay - dayCountRef;
         return WeekNames.weekNames[(-1 + diff % 7 + 7) % 7];
     }
-    public String getDayWeekZeller(){
+    public WeekName getDayWeekZeller(){
         int d = Integer.parseInt(day);
         int m = month.getNumOfMonth();
         int y = year;
@@ -93,5 +120,8 @@ public class Calendar{
         }
         int h = (d + (13*(m + 1))/5 + y%100 + (y%100)/4 + (y/100)/4 + 5*(y/100)) % 7;
         return WeekNames.weekNames[h];
+    }
+    public void setOutputMode(DateOutputMode outputMode){
+        this.outputMode=outputMode;
     }
 }

@@ -1,17 +1,17 @@
 public class Months {
     private static Month[] months = new Month[]{
-            new Month("01","Styczen",31),
-            new Month("02","Luty",28),
-            new Month("03","Marzec",31),
-            new Month("04","Kwiecien",30),
-            new Month("05","Maj",31),
-            new Month("06","Czerwiec",30),
-            new Month("07","Lipiec",31),
-            new Month("08","Sierpien",31),
-            new Month("09","Wrzesien",30),
-            new Month("10","Pazdziernik",31),
-            new Month("11","Listopad",30),
-            new Month("12","Grudzien",31),
+            new Month("01","styczen",31,"sty","I"),
+            new Month("02","luty",28,"lut","II"),
+            new Month("03","marzec",31,"mar","III"),
+            new Month("04","kwiecien",30,"kwi","IV"),
+            new Month("05","maj",31,"maj","V"),
+            new Month("06","czerwiec",30,"cze","VI"),
+            new Month("07","lipiec",31,"lip","VII"),
+            new Month("08","sierpien",31,"sie","VIII"),
+            new Month("09","wrzesien",30,"wrz","IX"),
+            new Month("10","pazdziernik",31,"paz","X"),
+            new Month("11","listopad",30,"lis","XI"),
+            new Month("12","grudzien",31,"gru","XII"),
     };
     public static Month getMonth(int numOfMonth){
         try{
