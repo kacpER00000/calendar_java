@@ -1,4 +1,4 @@
-public class Calendar{
+public class Calendar implements Comparable<Calendar>{
     private String day;
     private Month month;
     private int year;
@@ -123,5 +123,15 @@ public class Calendar{
     }
     public void setOutputMode(DateOutputMode outputMode){
         this.outputMode=outputMode;
+    }
+    @Override
+    public int compareTo(Calendar c){
+        if(year == c.year){
+            if(month == c.month){
+                return day.compareTo(c.day);
+            }
+            return Integer.compare(month.getNumOfMonth(), c.month.getNumOfMonth());
+        }
+        return Integer.compare(year,c.year);
     }
 }
