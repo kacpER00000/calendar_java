@@ -3,6 +3,7 @@ public class Date implements Comparable<Date>{
     private Month month;
     private int year;
     private DateOutputMode outputMode;
+
     public Date(String day, int numOfMonth, int year, DateOutputMode outputMode) throws IndexOutOfBoundsException,DayOutOfRangeException{
         this.outputMode=outputMode;
         this.year=year;
@@ -134,4 +135,14 @@ public class Date implements Comparable<Date>{
         }
         return Integer.compare(year,c.year);
     }
+    public String getDay() {
+        return day;
+    }
+    public Month getMonth() {
+        return month;
+    }
+    public int getYear() {
+        return year;
+    }
 }
+
