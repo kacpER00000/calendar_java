@@ -8,6 +8,7 @@ public class Main {
         dateList.add(new Date("29",2,2000,DateOutputMode.FULL_DATE));
         dateList.add(new Date("31",12,2015,DateOutputMode.FULL_DATE));
         final String nameSaveFile = "date.ser";
+        File saveFile = new File("date.ser");
         String day="";
         int numOfMonth=0;
         int year=0;
@@ -17,7 +18,7 @@ public class Main {
         int createOrImportOption;
         System.out.println("Select:\n" +
                 "1. Create new date\n" +
-                "2. Load from save file\n");
+                (saveFile.exists() ? "2. Load from save file\n" : ""));
         sc=new Scanner(System.in);
         createOrImportOption=sc.nextInt();
         if(createOrImportOption == 1) {
@@ -28,7 +29,7 @@ public class Main {
             numOfMonth = sc.nextInt();
             sc = new Scanner(System.in);
             year = sc.nextInt();
-        } else if(createOrImportOption == 2) {
+        } else if(createOrImportOption == 2 && saveFile.exists()) {
             ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(new FileInputStream(nameSaveFile)));
             tDate = (DateToSave) is.readObject();
             is.close();
