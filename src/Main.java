@@ -1,4 +1,6 @@
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -9,6 +11,8 @@ public class Main {
         dateList.add(new Date("31",12,2015,DateOutputMode.FULL_DATE));
         final String nameSaveFile = "date.ser";
         File saveFile = new File("date.ser");
+        FileWriter logFile = new FileWriter("log.txt",true);
+        logFile.append(LocalDate.now() + "\n");
         String day="";
         int numOfMonth=0;
         int year=0;
@@ -22,6 +26,7 @@ public class Main {
         sc=new Scanner(System.in);
         createOrImportOption=sc.nextInt();
         if(createOrImportOption == 1) {
+            logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(0));
             System.out.println("Please, input data in DD-MM-YYYY format.");
             sc = new Scanner(System.in);
             day = sc.nextLine();
@@ -30,6 +35,7 @@ public class Main {
             sc = new Scanner(System.in);
             year = sc.nextInt();
         } else if(createOrImportOption == 2 && saveFile.exists()) {
+            logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(1));
             ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(new FileInputStream(nameSaveFile)));
             tDate = (DateToSave) is.readObject();
             is.close();
@@ -49,9 +55,11 @@ public class Main {
             case 4 -> DateOutputMode.SHORT_DATE;
             default -> DateOutputMode.FULL_DATE;
         };
+        logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(2));
         System.out.println("Select calendar mode(0,1)");
         sc = new Scanner(System.in);
         int mode=sc.nextInt();
+        logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(3));
         try{
             if(createOrImportOption==1) {
                 if (mode == 1) {
@@ -76,31 +84,47 @@ public class Main {
                 option=sc.nextInt();
                 switch (option) {
                     case 1 -> {
+                        int moveOption=-1;
+                        while(moveOption != 1 && moveOption != 2){
+                            System.out.println("Press 1 to move forward, 2 to move backward");
+                            sc = new Scanner(System.in);
+                            moveOption = sc.nextInt();
+                        }
                         System.out.println(data.getData());
                         System.out.println("Data moved by a 1 week");
-                        data.moveByAWeek(true);
+                        if(moveOption == 1) {
+                            data.moveByAWeek(false);
+                            logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(4));
+                        } else if(moveOption == 2){
+                            data.moveByAWeek(true);
+                            logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(5));
+                        }
                         System.out.println(data.getData());
                     }
                     case 2 -> {
                         for (Date date : dateList) {
                             System.out.println(date.getData());
                         }
+                        logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(6));
                     }
                     case 3 -> {
                         Collections.sort(dateList);
                         for (Date date : dateList) {
                             System.out.println(date.getData());
                         }
+                        logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(7));
                     }
                     case 4 -> {
                         tDate = new DateToSave(data.getDay(), data.getMonth().getNumOfMonth(), data.getYear());
                         ObjectOutputStream os = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(nameSaveFile)));
                         os.writeObject(tDate);
                         os.close();
+                        logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(8));
                     }
                 }
-
             }while(option!=0);
+            logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(9));
+            logFile.close();
         } catch (MonthOutOfRangeException | DayOutOfRangeException e) {
             System.out.println(e.getMessage());
         }
