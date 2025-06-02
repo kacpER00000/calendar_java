@@ -1,12 +1,13 @@
 public class WeekNames {
     public static WeekName[] weekNames = new WeekName[]{
-            new WeekName("sobota", "sob"),
-            new WeekName("niedziela", "ndz"),
-            new WeekName("poniedzialek", "pon"),
-            new WeekName("wtorek", "wt"),
-            new WeekName("sroda", "sr"),
-            new WeekName("czwartek", "czw"),
-            new WeekName("piatek", "pt")
+            new WeekName("Saturday", "Sat"),
+            new WeekName("Sunday", "Sun"),
+            new WeekName("Monday", "Mon"),
+            new WeekName("Tuesday", "Tue"),
+            new WeekName("Wednesday", "Wed"),
+            new WeekName("Thursday", "Thu"),
+            new WeekName("Friday", "Fri"),
+
     };
 }
 

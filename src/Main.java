@@ -43,10 +43,10 @@ public class Main {
             return;
         }
         System.out.println("Select output mode:\n" +
-                "1 -> wtorek, 1 grudnia 2020,\n" +
-                "2 -> 1 grudnia 2020,\n" +
+                "1 -> Tuesday, 1 December 2020,\n" +
+                "2 -> 1 December 2020,\n" +
                 "3 -> 03.XII.2020,\n" +
-                "4 -> wt., 1-gru-2020.");
+                "4 -> Tue., 1-Dec-2020.");
         sc=new Scanner(System.in);
         int outputOption=sc.nextInt();
         DateOutputMode outputMode = switch (outputOption) {
@@ -56,21 +56,20 @@ public class Main {
             default -> DateOutputMode.FULL_DATE;
         };
         logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(2));
-        System.out.println("Select calendar mode(0,1)");
+        System.out.println("Select calendar mode(1 = normal mode, 2 = wrap-around mode for invalid day input)");
         sc = new Scanner(System.in);
         int mode=sc.nextInt();
         logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(3));
         try{
             if(createOrImportOption==1) {
-                if (mode == 1) {
-                    data = new Date(day, numOfMonth, year, true);
+                if (mode == 2) {
+                    data = new Date(day, numOfMonth, year, outputMode,true);
                 } else {
                     data = new Date(day, numOfMonth, year, outputMode);
                 }
-
             } else{
-                if (mode == 1) {
-                    data = new Date(tDate.day, tDate.numOfMonth, tDate.year, true);
+                if (mode == 2) {
+                    data = new Date(tDate.day, tDate.numOfMonth, tDate.year, outputMode,true);
                 } else {
                     data = new Date(tDate.day, tDate.numOfMonth, tDate.year, outputMode);
                 }
@@ -79,7 +78,7 @@ public class Main {
             System.out.println(data.getData());
             int option;
             do{
-                System.out.println("Wycisnij 1 aby przesunac o tydzien, 2. Wyświetlić daty, 3. Posortować daty, 4.Zapisać biezaca date do pliku, 0 aby zakonczyc");
+                System.out.println("Press 1 to move by a week, 2 to display dates, 3 to sort dates, 4 to save the current date to a file, 0 to exit");
                 sc=new Scanner(System.in);
                 option=sc.nextInt();
                 switch (option) {
