@@ -55,6 +55,9 @@ public class Date implements Comparable<Date> {
         this.year = year;
         this.outputMode = outputMode;
     }
+    public Date(String day, String numOfMonth, String year, DateOutputMode outputMode){
+        this(day, Integer.parseInt(numOfMonth), Integer.parseInt(year),outputMode);
+    }
     public void moveByAWeek(boolean moveBackward) {
         int delta = moveBackward ? -7 : 7;
         int d = Integer.parseInt(day) + delta;
@@ -158,15 +161,17 @@ public class Date implements Comparable<Date> {
         }
         return Integer.compare(year, c.year);
     }
-
     public String getDay() {
         return day;
     }
-
     public Month getMonth() {
         return month;
     }
     public int getYear() {
         return year;
+    }
+    public static Date parse(String date){
+        String[] args = date.split("-");
+        return new Date(args[0],args[1],args[2],DateOutputMode.FULL_DATE);
     }
 }

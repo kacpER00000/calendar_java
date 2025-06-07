@@ -8,7 +8,8 @@ public class Main {
         dateList.add(new Date("05",10,2004,DateOutputMode.FULL_DATE));
         dateList.add(new Date("30",5,1998,DateOutputMode.FULL_DATE));
         dateList.add(new Date("29",2,2000,DateOutputMode.FULL_DATE));
-        dateList.add(new Date("31",12,2015,DateOutputMode.FULL_DATE));
+        dateList.add(new Date("31","12","2015",DateOutputMode.FULL_DATE));
+        dateList.add(Date.parse("01-01-2001"));
         final String nameSaveFile = "date.ser";
         File saveFile = new File("date.ser");
         FileWriter logFile = new FileWriter("log.txt",true);
@@ -42,6 +43,10 @@ public class Main {
         } else {
             return;
         }
+        System.out.println("Select calendar mode(1 = normal mode, 2 = wrap-around mode for invalid day input)");
+        sc = new Scanner(System.in);
+        int mode=sc.nextInt();
+        logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(3));
         System.out.println("Select output mode:\n" +
                 "1 -> Tuesday, 1 December 2020,\n" +
                 "2 -> 1 December 2020,\n" +
@@ -50,16 +55,14 @@ public class Main {
         sc=new Scanner(System.in);
         int outputOption=sc.nextInt();
         DateOutputMode outputMode = switch (outputOption) {
+            case 1 -> outputMode = DateOutputMode.FULL_DATE;
             case 2 -> DateOutputMode.DATE_WITHOUT_WEEKDAY;
             case 3 -> DateOutputMode.DATE_WITH_ROMAN_NUM;
             case 4 -> DateOutputMode.SHORT_DATE;
-            default -> DateOutputMode.FULL_DATE;
+            default -> throw new IllegalArgumentException("Nieprawidłowy tryb wyświetlania: " + outputOption);
         };
         logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(2));
-        System.out.println("Select calendar mode(1 = normal mode, 2 = wrap-around mode for invalid day input)");
-        sc = new Scanner(System.in);
-        int mode=sc.nextInt();
-        logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(3));
+
         try{
             if(createOrImportOption==1) {
                 if (mode == 2) {
