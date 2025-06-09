@@ -134,7 +134,7 @@ public class Date implements Comparable<Date> {
         }
         int dayCountMyDay = 365*y + y/4 - y/100 + y/400 + (153*m+8)/5 + d;
         int diff = dayCountMyDay - dayCountRef;
-        return WeekNames.weekNames[(-1 + diff % 7 + 7) % 7];
+        return WeekNames.getWeekName((-1 + diff % 7 + 7) % 7);
     }
     public WeekName getDayWeekZeller() {
         int d = Integer.parseInt(day);
@@ -145,7 +145,7 @@ public class Date implements Comparable<Date> {
             y -= 1;
         }
         int h = (d + (13 * (m + 1)) / 5 + y % 100 + (y % 100) / 4 + (y / 100) / 4 + 5 * (y / 100)) % 7;
-        return WeekNames.weekNames[h];
+        return WeekNames.getWeekName(h);
     }
     public void setOutputMode(DateOutputMode outputMode) {
         this.outputMode = outputMode;

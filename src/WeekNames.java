@@ -1,5 +1,5 @@
 public class WeekNames {
-    public static WeekName[] weekNames = new WeekName[]{
+    private static WeekName[] weekNames = new WeekName[]{
             new WeekName("Saturday", "Sat"),
             new WeekName("Sunday", "Sun"),
             new WeekName("Monday", "Mon"),
@@ -9,5 +9,8 @@ public class WeekNames {
             new WeekName("Friday", "Fri"),
 
     };
+    public static WeekName getWeekName(int idx){
+        return weekNames[idx];
+    }
 }
 
