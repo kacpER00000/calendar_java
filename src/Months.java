@@ -1,5 +1,13 @@
+/**
+ * Klasa narzędziowa udostępniająca stałą tablicę miesięcy oraz metodę dostępu do nich.
+ * Pozwala na pobieranie obiektu Month na podstawie indeksu (0-11).
+ * W przypadku nieprawidłowego indeksu zgłaszany jest MonthOutOfRangeException.
+ */
 public class Months {
     private static Month[] months = new Month[]{
+            /**
+             * Stała tablica obiektów Month reprezentujących wszystkie miesiące roku.
+            */
             new Month("01", "January", 31, "Jan", "I"),
             new Month("02", "February", 28, "Feb", "II"),
             new Month("03", "March", 31, "Mar", "III"),
@@ -14,6 +22,13 @@ public class Months {
             new Month("12", "December", 31, "Dec", "XII"),
 
     };
+    /**
+     * Zwraca obiekt Month odpowiadający podanemu indeksowi (0-11).
+     *
+     * @param numOfMonth indeks miesiąca (0 dla stycznia, 11 dla grudnia)
+     * @return obiekt Month dla danego indeksu
+     * @throws MonthOutOfRangeException jeśli indeks jest poza zakresem 0-11
+     */
     public static Month getMonth(int numOfMonth){
         try{
             return months[numOfMonth];

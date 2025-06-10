@@ -55,11 +55,10 @@ public class Main {
         sc=new Scanner(System.in);
         int outputOption=sc.nextInt();
         DateOutputMode outputMode = switch (outputOption) {
-            case 1 -> outputMode = DateOutputMode.FULL_DATE;
             case 2 -> DateOutputMode.DATE_WITHOUT_WEEKDAY;
             case 3 -> DateOutputMode.DATE_WITH_ROMAN_NUM;
             case 4 -> DateOutputMode.SHORT_DATE;
-            default -> throw new IllegalArgumentException("Nieprawidłowy tryb wyświetlania: " + outputOption);
+            default -> outputMode = DateOutputMode.FULL_DATE;
         };
         logFile.append(LocalTime.now() + ": " + LogEvents.getEventMsg(2));
 
