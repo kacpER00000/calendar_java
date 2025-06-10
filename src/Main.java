@@ -2,6 +2,10 @@ import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
+
+/**
+ * Główne działanie programu - metoda main uruchamia program.
+ */
 public class Main {
     public static void main(String[] args) throws Exception {
         ArrayList<Date> dateList = new ArrayList<>();
